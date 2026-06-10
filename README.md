@@ -29,7 +29,7 @@ poseidon = { tag = "v0.3.0", git = "https://github.com/noir-lang/poseidon" }
 
 ```noir
 use noir_sparse_merkle::smt::MerkleProof;
-use noir_sparse_merkle::membership::verify_membership;
+use noir_sparse_merkle::verify_membership;
 
 fn main(
     root: Field,
@@ -52,7 +52,7 @@ fn main(
 
 ```noir
 use noir_sparse_merkle::smt::{MerkleProof, NonMembershipProof};
-use noir_sparse_merkle::non_member::non_membership_proof;
+use noir_sparse_merkle::verify_non_membership;
 
 fn main(
     root: Field,
@@ -83,7 +83,7 @@ fn main(
         left_proof,
         right_proof,
     };
-    non_membership_proof(proof, root);
+    verify_non_membership(proof, root);
     // circuit passes if key is provably absent, fails otherwise
 }
 ```
@@ -96,24 +96,24 @@ fn main(
 
 Represents a membership proof for a single leaf in the tree.
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `root` | `Field` | The Merkle root to verify against |
-| `leaf` | `Field` | The leaf value being proven |
-| `siblings` | `[Field; N]` | Sibling hashes along the path from leaf to root |
-| `is_left` | `[bool; N]` | Path direction at each level (`true` = sibling is on the left) |
+| Field      | Type         | Description                                                    |
+| ---------- | ------------ | -------------------------------------------------------------- |
+| `root`     | `Field`      | The Merkle root to verify against                              |
+| `leaf`     | `Field`      | The leaf value being proven                                    |
+| `siblings` | `[Field; N]` | Sibling hashes along the path from leaf to root                |
+| `is_left`  | `[bool; N]`  | Path direction at each level (`true` = sibling is on the left) |
 
 #### `NonMembershipProof<let N: u32>`
 
 Represents a proof that a key is absent from a sorted sparse Merkle tree.
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `key` | `Field` | The key being proven absent |
-| `left_key` | `Field` | The largest key in the tree smaller than `key` |
-| `right_key` | `Field` | The smallest key in the tree larger than `key` |
-| `left_proof` | `MerkleProof<N>` | Membership proof for `left_key` |
-| `right_proof` | `MerkleProof<N>` | Membership proof for `right_key` |
+| Field         | Type             | Description                                    |
+| ------------- | ---------------- | ---------------------------------------------- |
+| `key`         | `Field`          | The key being proven absent                    |
+| `left_key`    | `Field`          | The largest key in the tree smaller than `key` |
+| `right_key`   | `Field`          | The smallest key in the tree larger than `key` |
+| `left_proof`  | `MerkleProof<N>` | Membership proof for `left_key`                |
+| `right_proof` | `MerkleProof<N>` | Membership proof for `right_key`               |
 
 ### Functions
 
@@ -123,9 +123,10 @@ Verifies that a leaf is included in a Merkle tree with the given root. Hashes th
 
 **Source:** `src/membership.nr`
 
-#### `non_membership_proof<let N: u32>(proof: NonMembershipProof<N>, root: Field)`
+#### `verify_non_membership<let N: u32>(proof: NonMembershipProof<N>, root: Field)`
 
 Verifies that a key is NOT in a sorted sparse Merkle tree. Checks that:
+
 1. Both `left_key` and `right_key` are valid members of the tree (via `verify_membership`)
 2. Both membership proofs verify against the provided `root`
 3. Boundary keys are bound to their respective proof leaves
@@ -140,6 +141,7 @@ The circuit fails if any check fails.
 Compares two field elements by decomposing them into `B` bits (little-endian via `to_le_bits`) and comparing from the most significant bit downward. Returns `true` if `a < b`.
 
 Common bit widths:
+
 - `field_less_than::<160>(a, b)` for Ethereum addresses (20 bytes)
 - `field_less_than::<256>(a, b)` for Solana public keys (32 bytes)
 - `field_less_than::<64>(a, b)` for small key spaces
@@ -184,6 +186,7 @@ let nm_proof = smt.non_membership_proof(20);        // proof that 20 is absent
 The library includes comprehensive tests for both membership and non-membership proofs:
 
 **Membership:**
+
 - Leftmost, rightmost, and middle leaf verification
 - Depth-4 tree with mixed left/right paths
 - Failure cases: wrong root, wrong leaf, wrong sibling
@@ -191,6 +194,7 @@ The library includes comprehensive tests for both membership and non-membership 
 - All `is_left` path combinations exercised
 
 **Non-Membership:**
+
 - Keys absent between adjacent leaves (10<20<30, 30<40<50, 50<60<70)
 - Large keys (Ethereum-sized 160-bit values)
 - Failure cases: unbound keys, key smaller/larger than all leaves

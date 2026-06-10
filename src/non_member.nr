@@ -20,7 +20,7 @@ pub fn field_less_than<let B: u32>(a: Field, b: Field) -> bool {
     a_less
 }
 
-pub fn non_membership_proof<let N: u32>(proof: NonMembershipProof<N>, root: Field) {
+pub fn verify_non_membership<let N: u32>(proof: NonMembershipProof<N>, root: Field) {
     // verify both neighbors are actually in the tree
     verify_membership(proof.left_proof);
     verify_membership(proof.right_proof);
@@ -36,6 +36,10 @@ pub fn non_membership_proof<let N: u32>(proof: NonMembershipProof<N>, root: Fiel
     // target key falls between the two neighbors
     assert(field_less_than::<160>(proof.left_key, proof.key));
     assert(field_less_than::<160>(proof.key, proof.right_key));
+}
+
+pub fn non_membership_proof<let N: u32>(proof: NonMembershipProof<N>, root: Field) {
+    verify_non_membership(proof, root);
 }
 
 #[test]
@@ -198,7 +202,8 @@ fn test_non_membership_t8_key20_between_10_and_30() {
         siblings: [10, h_50_70, h_right_half],
         is_left: [true, false, false],
     };
-    let proof = NonMembershipProof { key: 20, left_key: 10, right_key: 30, left_proof, right_proof };
+    let proof =
+        NonMembershipProof { key: 20, left_key: 10, right_key: 30, left_proof, right_proof };
     non_membership_proof(proof, root);
 }
 
@@ -227,7 +232,8 @@ fn test_non_membership_t9_key40_between_30_and_50() {
         siblings: [70, h_10_30, h_right_half],
         is_left: [false, true, false],
     };
-    let proof = NonMembershipProof { key: 40, left_key: 30, right_key: 50, left_proof, right_proof };
+    let proof =
+        NonMembershipProof { key: 40, left_key: 30, right_key: 50, left_proof, right_proof };
     non_membership_proof(proof, root);
 }
 
@@ -255,7 +261,8 @@ fn test_non_membership_t10_key60_between_50_and_70() {
         siblings: [50, h_10_30, h_right_half],
         is_left: [true, true, false],
     };
-    let proof = NonMembershipProof { key: 60, left_key: 50, right_key: 70, left_proof, right_proof };
+    let proof =
+        NonMembershipProof { key: 60, left_key: 50, right_key: 70, left_proof, right_proof };
     non_membership_proof(proof, root);
 }
 
@@ -285,6 +292,7 @@ fn test_non_membership_t13_present_key_fails() {
         siblings: [10, h_50_70, h_right_half],
         is_left: [true, false, false],
     };
-    let proof = NonMembershipProof { key: 30, left_key: 30, right_key: 30, left_proof, right_proof };
+    let proof =
+        NonMembershipProof { key: 30, left_key: 30, right_key: 30, left_proof, right_proof };
     non_membership_proof(proof, root);
 }

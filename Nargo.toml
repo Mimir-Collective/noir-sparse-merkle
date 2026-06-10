@@ -1,5 +1,5 @@
 [package]
-name = "sparseMerkle"
+name = "noir_sparse_merkle"
 type = "lib"
 authors = ["Ian Elliott(l0wlevelcr0w) l0wlevelcr0w@proton.me"]
 compiler_version = ">=0.36.0"
