@@ -7,3 +7,4 @@ pub use hash::hash_nodes;
 pub use membership::verify_membership;
 pub use non_member::verify_non_membership;
 pub use smt::MerkleProof;
+pub use smt::NonMembershipProof;
