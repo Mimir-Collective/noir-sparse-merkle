@@ -1,7 +1,7 @@
-use poseidon::poseidon::bn254::hash_2;
+use mimir_poseidon2_interop::hash_merkle_node;
 
 pub fn hash_nodes(left: Field, right: Field) -> Field {
-    hash_2([left, right])
+    hash_merkle_node(left, right)
 }
 
 #[test]

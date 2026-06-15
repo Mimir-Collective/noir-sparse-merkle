@@ -176,7 +176,7 @@ fn test_non_membership_single_leaf_tree_fail() {
 
 // -- Fixture-based non-membership tests ---------------------------------------
 // Tree: sorted leaves [10, 30, 50, 70] padded to 8 slots, depth 3.
-// Root: 0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c
+// Root: 0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78
 
 // Test 8: key 20 absent - bounded by leaf 10 (index 0) and leaf 30 (index 1)
 #[test]
@@ -188,7 +188,7 @@ fn test_non_membership_t8_key20_between_10_and_30() {
     let h_left_half = hash_nodes(h_10_30, h_50_70);
     let root = hash_nodes(h_left_half, h_right_half);
 
-    assert(root == 0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c);
+    assert(root == 0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78);
 
     let left_proof = MerkleProof {
         root,
@@ -217,7 +217,7 @@ fn test_non_membership_t9_key40_between_30_and_50() {
     let h_left_half = hash_nodes(h_10_30, h_50_70);
     let root = hash_nodes(h_left_half, h_right_half);
 
-    assert(root == 0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c);
+    assert(root == 0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78);
 
     let left_proof = MerkleProof {
         root,
@@ -247,7 +247,7 @@ fn test_non_membership_t10_key60_between_50_and_70() {
     let h_left_half = hash_nodes(h_10_30, h_50_70);
     let root = hash_nodes(h_left_half, h_right_half);
 
-    assert(root == 0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c);
+    assert(root == 0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78);
 
     let left_proof = MerkleProof {
         root,

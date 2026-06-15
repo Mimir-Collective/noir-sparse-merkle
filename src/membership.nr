@@ -84,7 +84,7 @@ fn test_verify_membership_wrong() {
 // -- Fixture-based tests -------------------------------------------------------
 // Tree: sorted leaves [10, 30, 50, 70] padded to 8 slots, depth 3.
 // Root verified against Rust-generated value:
-//   0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c
+//   0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78
 
 // Test 1: leftmost occupied leaf (index 0, value 10) - all right siblings, path all false
 #[test]
@@ -96,7 +96,7 @@ fn test_membership_t1_index0_leaf10() {
     let h_left_half = hash_nodes(h_10_30, h_50_70);
     let root = hash_nodes(h_left_half, h_right_half);
 
-    assert(root == 0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c);
+    assert(root == 0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78);
 
     let proof = MerkleProof {
         root,
@@ -117,7 +117,7 @@ fn test_membership_t2_index3_leaf70() {
     let h_left_half = hash_nodes(h_10_30, h_50_70);
     let root = hash_nodes(h_left_half, h_right_half);
 
-    assert(root == 0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c);
+    assert(root == 0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78);
 
     let proof = MerkleProof {
         root,
@@ -138,7 +138,7 @@ fn test_membership_t3_index1_leaf30() {
     let h_left_half = hash_nodes(h_10_30, h_50_70);
     let root = hash_nodes(h_left_half, h_right_half);
 
-    assert(root == 0x0d73ba3473aaa35248fc2f3c41a84efad9d95c5d61f9aaa4a02b67d08b3ad04c);
+    assert(root == 0x01cbd04b968a605002240214ef482ea57a7889d4ce7e79b3c254f83671ab3b78);
 
     let proof = MerkleProof {
         root,
@@ -166,7 +166,7 @@ fn test_membership_t4_depth4_index4_leaf45() {
     let l3_right = hash_nodes(h_00_00, h_00_00);
     let root = hash_nodes(l3_left, l3_right);
 
-    assert(root == 0x11bf6ae60261f0f6bde6cba7a86a5baa94c5b99c2022daf30a9514d01f6ee832);
+    assert(root == 0x10d922f2dd79720013d481901f54732c9d633d29db1acf193747a9b78b2850a0);
 
     let proof = MerkleProof {
         root,
