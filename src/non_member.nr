@@ -34,8 +34,8 @@ pub fn verify_non_membership<let N: u32>(proof: NonMembershipProof<N>, root: Fie
     assert(proof.right_proof.leaf == proof.right_key);
 
     // target key falls between the two neighbors
-    assert(field_less_than::<160>(proof.left_key, proof.key));
-    assert(field_less_than::<160>(proof.key, proof.right_key));
+    assert(field_less_than::<254>(proof.left_key, proof.key));
+    assert(field_less_than::<254>(proof.key, proof.right_key));
 }
 
 pub fn non_membership_proof<let N: u32>(proof: NonMembershipProof<N>, root: Field) {
@@ -44,15 +44,15 @@ pub fn non_membership_proof<let N: u32>(proof: NonMembershipProof<N>, root: Fiel
 
 #[test]
 fn test_field_less_than() {
-    assert(field_less_than::<160>(5, 10));
-    assert(!field_less_than::<160>(10, 5));
-    assert(!field_less_than::<160>(7, 7));
+    assert(field_less_than::<254>(5, 10));
+    assert(!field_less_than::<254>(10, 5));
+    assert(!field_less_than::<254>(7, 7));
 }
 
 #[test(should_fail)]
 fn test_field_less_than_fail() {
-    assert(field_less_than::<160>(10, 5));
-    assert(field_less_than::<160>(7, 7));
+    assert(field_less_than::<254>(10, 5));
+    assert(field_less_than::<254>(7, 7));
 }
 
 #[test]
